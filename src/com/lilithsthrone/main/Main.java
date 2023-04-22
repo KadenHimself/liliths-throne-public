@@ -136,6 +136,12 @@ public class Main extends Application {
 		CheckForResFolder();
 		
 		credits.add(new CreditsSlot("Anonymous", "", 99, 99, 99, 99));
+
+
+
+		
+		
+		
 		credits.sort(Comparator.comparing((CreditsSlot a) -> a.getName().toLowerCase()));
 		
 		
