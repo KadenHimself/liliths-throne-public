@@ -82,7 +82,11 @@ public enum FluidModifier {
 			"It is highly addictive, and anyone who drinks too much will quickly become dependent on it.",
 			"Addictive fluids will make anyone who consumes them become addicted to that particular type of fluid.") {
 		@Override
-		public String applyEffects(GameCharacter target, GameCharacter fluidProvider, float millilitres, FluidInterface fluid) {
+		public String applyEffects(
+				GameCharacter target,
+				GameCharacter fluidProvider,
+				float millilitres,
+				FluidInterface fluid) {
 			if(target==null || fluidProvider==null) {
 				return ""; // catch for if one of the characters is null, which was the case in GameCharacter.calculateGenericSexEffects
 			}
