@@ -34,6 +34,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import com.lilithsthrone.game.character.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -380,6 +381,8 @@ public class Game implements XMLSaving {
 	
 	// Slavery:
 	private OccupancyUtil occupancyUtil = new OccupancyUtil();
+
+	private static final NPCLoader npcLoader = new NPCLoader(Main.getDocBuilder());
 
 	public Game() {
 		worlds = new HashMap<>();
@@ -1181,9 +1184,9 @@ public class Game implements XMLSaving {
 					vec.setY(vec.getY()-3);
 					Main.game.getWorlds().get(WorldType.BAT_CAVERNS).getCell(vec).getPlace().setPlaceType(PlaceType.BAT_CAVERN_SHAFT);
 					Main.game.getWorlds().get(WorldType.BAT_CAVERNS).getCell(vec).getPlace().setName(PlaceType.BAT_CAVERN_SHAFT.getName());
-					
+
 				}
-				
+
 				if(debug) {
 					System.out.println("Maps finished: "+ (System.nanoTime()-time)/1000000000d);
 				}
@@ -1196,9 +1199,6 @@ public class Game implements XMLSaving {
 
 				// Load NPCs:
 				NodeList npcs = gameElement.getElementsByTagName("NPC");
-				Map<String, Class<? extends NPC>> npcClasses = new ConcurrentHashMap<>();
-				Map<Class<? extends NPC>, Method> loadFromXMLMethods = new ConcurrentHashMap<>();
-				Map<Class<? extends NPC>, Constructor<? extends NPC>> constructors = new ConcurrentHashMap<>();
 				int totalNpcCount = npcs.getLength();
 				IntStream.range(0,totalNpcCount).parallel().mapToObj(i -> ((Element) npcs.item(i)))
 						.forEach(e ->{
@@ -1226,7 +1226,7 @@ public class Game implements XMLSaving {
 									if(Main.isVersionOlderThan(loadingVersion, "0.3.5.9")) {
 										className = className.replace("Alexa", "Helena");
 									}
-									NPC npc = loadNPC(doc, e, className, npcClasses, loadFromXMLMethods, constructors);
+									NPC npc = loadNPC(doc, e, className);
 									if(npc!=null)  {
 										if(!Main.isVersionOlderThan(loadingVersion, "0.2.11.5")
 												|| (npc.getClass()!=DarkSiren.class
@@ -1920,7 +1920,7 @@ public class Game implements XMLSaving {
 					Main.game.getNpc(Lunexis.class).setAffection(Main.game.getNpc(Aurokaris.class), -100);
 					Main.game.getNpc(Lunexis.class).setAffection(Main.game.getNpc(Ursa.class), -100);
 				}
-				
+
 				if(debug) {
 					System.out.println("New NPCs finished");
 					System.out.println("All finished");
@@ -1964,51 +1964,10 @@ public class Game implements XMLSaving {
 		Main.game.getPlayer().calculateStatusEffects(0);
 	}
 
-	@SuppressWarnings("unchecked")
-	private static NPC loadNPC(Document doc,
-			Element e,
-			String className, 
-			Map<String, Class<? extends NPC>> classMap,
-			Map<Class<? extends NPC>, Method> loadFromXMLMethodMap,
-			Map<Class<? extends NPC>, Constructor<? extends NPC>> constructorMap){
-		
-		try {
-			Class<? extends NPC> npcClass = classMap.get(className);
-			if (npcClass == null) {
-				npcClass = (Class<? extends NPC>) Class.forName(className);
-				synchronized (npcClass) {
-					if(classMap.containsKey(className)){
-						npcClass = classMap.get(className);
-					} else {
-						classMap.putIfAbsent(className, npcClass);
-						Method m = npcClass.getMethod("loadFromXML", Element.class, Document.class, CharacterImportSetting[].class);
-						loadFromXMLMethodMap.put(npcClass, m);
-
-						Constructor<? extends NPC> declaredConstructor = npcClass.getDeclaredConstructor(boolean.class);
-						constructorMap.put(npcClass, declaredConstructor);
-					}
-				}
-			}
-			Constructor<? extends NPC> declaredConstructor = constructorMap.get(npcClass);
-			if (declaredConstructor == null) {
-				synchronized (npcClass) {
-					declaredConstructor = constructorMap.get(npcClass);
-				}
-			}
-			NPC npc = declaredConstructor.newInstance(true);
-			loadFromXMLMethodMap.get(npcClass).invoke(npc, e, doc, new CharacterImportSetting[] {});
-			return npc;
-		} catch(NoSuchMethodException nsme) {
-			System.err.println("Couldn't find required method(loadFromXML or constructor(boolean)) for class: " + className);
-			nsme.printStackTrace();
-			return null;
-		} catch(Exception ex) {
-			System.err.println("Failed to load NPC class: "+className);
-			ex.printStackTrace();
-			return null;
-		}
+	public static NPC loadNPC(Document doc, Element e, String className) {
+		return npcLoader.loadNPC(doc, e, className);
 	}
-	
+
 	public Element saveAsXML(Element parentElement, Document doc) {
 		Element element = doc.createElement("game");
 		
@@ -2423,14 +2382,17 @@ public class Game implements XMLSaving {
 			// Headless horseman:
 			
 			if(!Main.game.NPCMap.containsKey(Main.game.getUniqueNPCId(HeadlessHorseman.class))) { addNPC(new HeadlessHorseman(), false); addedNpcs.add(HeadlessHorseman.class); }
-			
+
 			// Themiscyra:
 			
 			if(!Main.game.NPCMap.containsKey(Main.game.getUniqueNPCId(Lunexis.class))) { addNPC(new Lunexis(), false); addedNpcs.add(Lunexis.class); }
 			if(!Main.game.NPCMap.containsKey(Main.game.getUniqueNPCId(Ursa.class))) { addNPC(new Ursa(), false); addedNpcs.add(Ursa.class); }
 			if(!Main.game.NPCMap.containsKey(Main.game.getUniqueNPCId(Aurokaris.class))) { addNPC(new Aurokaris(), false); addedNpcs.add(Aurokaris.class); }
 			
-			
+			// Load characters from Mods
+      //
+			npcLoader.loadModNPC(this);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -4651,7 +4613,7 @@ public class Game implements XMLSaving {
 		LocalDateTime ldt = this.getDateNow().withHour(hourOfDay);
 		return DateAndTime.getDayPeriod(ldt, Game.DOMINION_LATITUDE, Game.DOMINION_LONGITUDE);
 	}
-	
+
 	public boolean isMorning() {
 		return getMinutesPassed() % (24 * 60) >= 0 && getMinutesPassed() % (24 * 60) < (60 * 12);
 	}
@@ -4710,9 +4672,16 @@ public class Game implements XMLSaving {
 		}
 	}
 
-	/**
-	 * @return a list of all offspring that have been encountered in the game.
-	 */
+	public NPC getNpc(String npcName) {
+		try {
+			return (NPC) this.getNPCById(getUniqueNPCId(npcName));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("getNpc("+npcName+") returning null!");
+			return null;
+		}
+	}
+
 	public List<NPC> getOffspring() {
 		List<NPC> offspring = new ArrayList<>();
 		
@@ -4799,10 +4768,14 @@ public class Game implements XMLSaving {
 	}
 	
 	public String getUniqueNPCId(Class<? extends NPC> c) {
-		if(c.equals(DarkSiren.class)) {
+		return getUniqueNPCId(c.getSimpleName());
+	}
+
+	public String getUniqueNPCId(final String c) {
+		if(c.equals("DarkSiren")) {
 			return "-1,FortressDemonLeader";
 		}
-		return "-1,"+c.getSimpleName();
+		return "-1,"+c;
 	}
 
 	public String getNPCId(Class<? extends NPC> c) {
@@ -4946,7 +4919,7 @@ public class Game implements XMLSaving {
 			loopNpc.setAllAreasKnownByCharacter(npc, false);
 			loopNpc.setAffection(npc, 0f);
 		}
-		
+
 		//TODO Why are the unique checks necessary?
 		// Use separate loops so that we only check if the banished npc isUnique once
 		if(npc.isUnique()) {
@@ -5003,7 +4976,7 @@ public class Game implements XMLSaving {
 		}
 	}
 
-	private void removeNPC(NPC npc) {
+	public void removeNPC(NPC npc) {
 		if(npc.isPregnant()) {
 			// End with birth if father is player
 			npc.endPregnancy(npc.getPregnantLitter().getFather()!=null && npc.getPregnantLitter().getFather().isPlayer());
