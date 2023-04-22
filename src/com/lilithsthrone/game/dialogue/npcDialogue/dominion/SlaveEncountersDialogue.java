@@ -41,21 +41,27 @@ public class SlaveEncountersDialogue {
 	public static DialogueNode getSlaveUsesYou(NPC targetedSlave) {
 		slave = targetedSlave;
 		Main.game.setActiveNPC(targetedSlave);
-		targetedSlave.setLocation(Main.game.getPlayer(), false);
+		targetedSlave.setLocation(
+				Main.game.getPlayer(),
+				false);
 		return SLAVE_USES_YOU;
 	}
 
 	public static DialogueNode getSlaveUsesYouDungeon(NPC targetedSlave) {
 		slave = targetedSlave;
 		Main.game.setActiveNPC(targetedSlave);
-		targetedSlave.setLocation(Main.game.getPlayer(), false);
+		targetedSlave.setLocation(
+				Main.game.getPlayer(),
+				false);
 		return SLAVE_USES_YOU_DUNGEON;
 	}
 	
 	public static DialogueNode getSlaveUsesYouStreet(NPC targetedSlave) {
 		slave = targetedSlave;
 		Main.game.setActiveNPC(targetedSlave);
-		targetedSlave.setLocation(Main.game.getPlayer(), false);
+		targetedSlave.setLocation(
+				Main.game.getPlayer(),
+				false);
 		return SLAVE_USES_YOU_STREETS;
 	}
 	

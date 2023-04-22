@@ -14,7 +14,9 @@ import com.lilithsthrone.main.Main;
  */
 public enum SexAreaPenetration implements SexAreaInterface {
 	
-	PENIS(4, -2f, true) {
+	PENIS(4,
+	      -2f,
+	      true) {
 		@Override
 		public String getName(GameCharacter owner, boolean standardName) {
 			if(standardName) {

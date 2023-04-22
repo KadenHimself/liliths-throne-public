@@ -395,7 +395,8 @@ public abstract class AbstractStatusEffect {
 	
 	public String applyEffect(GameCharacter target, int secondsPassed, long totalSecondsPassed) {
 		if(this.isFromExternalFile() && target!=null) {
-			String parsedResult = UtilText.parse(target, applyEffectString.replaceAll("TOTAL_SECONDS_PASSED", String.valueOf(totalSecondsPassed)).replaceAll("SECONDS_PASSED", String.valueOf(secondsPassed)));
+			String parsedResult = UtilText.parse(target,
+			                                     applyEffectString.replaceAll("TOTAL_SECONDS_PASSED", String.valueOf(totalSecondsPassed)).replaceAll("SECONDS_PASSED", String.valueOf(secondsPassed)));
 			if(parsedResult.trim().length()>0) {
 				return parsedResult;
 			} else {

@@ -434,8 +434,8 @@ public class CharacterModificationUtils {
 			BodyChanging.getTarget().setBirthday(BodyChanging.getTarget().getBirthday().plusYears(age-(CharacterModificationUtils.MAX_AGE_NPC-GameCharacter.MINIMUM_AGE)));
 		}
 		
-		if(BodyChanging.getTarget().isPlayer() && age<18) {
-			BodyChanging.getTarget().setBirthday(BodyChanging.getTarget().getBirthday().minusYears(18-age));
+		if(BodyChanging.getTarget().isPlayer() && age<14) {
+			BodyChanging.getTarget().setBirthday(BodyChanging.getTarget().getBirthday().minusYears(14-age));
 		}
 		
 		if(age<0) {
@@ -469,7 +469,7 @@ public class CharacterModificationUtils {
 				contentSB.append("<div class='container-full-width' style='width:calc(33.3% - 16px);'>");
 					contentSB.append(applyDateWrapper("Age", "AGE", "", "",
 							String.valueOf(BodyChanging.getTarget().getAgeValue()),
-							BodyChanging.getTarget().getAgeValue()<=18,
+							BodyChanging.getTarget().getAgeValue()<=14,
 							BodyChanging.getTarget().isPlayer()
 								?BodyChanging.getTarget().getAgeValue()>=MAX_AGE_PLAYER
 								:BodyChanging.getTarget().getAgeValue()>=MAX_AGE_NPC));
@@ -513,7 +513,7 @@ public class CharacterModificationUtils {
 		contentSB.append("<div class='container-half-width'>");
 			contentSB.append(applyDateWrapper("Age", "AGE", "", "",
 					String.valueOf(BodyChanging.getTarget().getAgeValue()),
-					BodyChanging.getTarget().getAgeValue()<=18,
+					BodyChanging.getTarget().getAgeValue()<=14,
 					BodyChanging.getTarget().isPlayer()
 						?BodyChanging.getTarget().getAgeValue()>=MAX_AGE_PLAYER
 						:BodyChanging.getTarget().getAgeValue()>=MAX_AGE_NPC));
@@ -970,13 +970,13 @@ public class CharacterModificationUtils {
 	public static String getAgeAppearanceChoiceDiv() {
 		return applyFullVariableWrapper(
 				"Age Appearance",
-				UtilText.parse(BodyChanging.getTarget(), "Change how old [npc.name] [npc.verb(appear)] to be. [npc.She] [npc.is] limited to looking as young as 18, or up to ten years older than [npc.her] real age."
+				UtilText.parse(BodyChanging.getTarget(), "Change how old [npc.name] [npc.verb(appear)] to be. [npc.She] [npc.is] limited to looking as young as 14, or up to ten years older than [npc.her] real age."
 						+ "<br/><i>This is purely a cosmetic change, and doesn't affect any in-game choices.</i>"),
 				"AGE_APPEARANCE",
 				"1",
 				"5",
 				String.valueOf(BodyChanging.getTarget().getAppearsAsAgeValue()),
-				BodyChanging.getTarget().getAppearsAsAgeValue()<=18,
+				BodyChanging.getTarget().getAppearsAsAgeValue()<=14,
 				BodyChanging.getTarget().getAppearsAsAgeValue()>=(BodyChanging.getTarget().getAgeValue()+10))
 				
 				+ applyWrapper("Birthday",

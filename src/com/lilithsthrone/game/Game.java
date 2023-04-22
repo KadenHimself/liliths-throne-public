@@ -5,8 +5,6 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.StringWriter;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -339,8 +337,7 @@ public class Game implements XMLSaving {
 	private int weatherTimeRemainingInSeconds;
 	
 	private Encounter currentEncounter;
-	// Need to always return the same encounter at the same time in case it gets triggered multiple times in logic somewhere, so once it's been calculated at a certain time, reuse that result.
-	// These two variables are responsible for holding that information (and are located here as they need to be reset upon new game or loading a game).
+
 	public Value<Long, DialogueNode> forcedEncounterAtSeconds = new Value<>(-1l, null);
 	public Value<Long, DialogueNode> encounterAtSeconds = new Value<>(-1l, null);
 
@@ -393,7 +390,9 @@ public class Game implements XMLSaving {
 		itemGeneration = new ItemGeneration();
 		characterUtils = new CharacterUtils();
 		OccupantManagementDialogue.resetImportantCells();
-		startingDate = LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), LocalDateTime.now().getDayOfMonth(), 00, 00);
+		startingDate = LocalDateTime.of(LocalDateTime.now().getYear(),
+		                                LocalDateTime.now().getMonth(),
+		                                LocalDateTime.now().getDayOfMonth(), 00, 00);
 		secondsPassed = TIME_START_SECONDS;
 		inCombat = false;
 		inSex = false;
@@ -469,17 +468,7 @@ public class Game implements XMLSaving {
 				saveNumber++;
 				saveLocation = "data/characters/"+characterName+savePostfix+"("+saveNumber+").xml";
 			}
-			
-//			if(new File("data/characters/exported_"+characterName+"_day"+Main.game.getDayNumber()+".xml").exists()) {
-//				saveLocation = "data/characters/exported_"+characterName+"_day"+Main.game.getDayNumber()+"("+saveNumber+").xml";
-//			}
-//			
-//			while(new File("data/characters/exported_"+characterName+"_day"+Main.game.getDayNumber()+"("+saveNumber+").xml").exists()) {
-//				saveNumber++;
-//				saveLocation = "data/characters/exported_"+characterName+"_day"+Main.game.getDayNumber()+"("+saveNumber+").xml";
-//			}
-			
-			
+
 			StreamResult result = new StreamResult(saveLocation);
 			
 			transformer.transform(source, result);
@@ -521,8 +510,8 @@ public class Game implements XMLSaving {
 						CharacterImportSetting.REMOVE_RACE_CONCEALED,
 						CharacterImportSetting.CLEAR_FAMILY_ID);
 				try {
-					if(((Element)((Element)((Element)characterElement.getElementsByTagName("character").item(0)).getElementsByTagName("core").item(0)).getElementsByTagName("id").item(0)).getAttribute("value").equals("PlayerCharacter")) {
-						importedSlave.setBirthday(importedSlave.getBirthday().plusYears(18)); // If the imported character is a player character, they need to have their age adjusted to fit with the fact that NPCs start at age 18
+					if (((Element) ((Element) ((Element) characterElement.getElementsByTagName("character").item(0)).getElementsByTagName("core").item(0)).getElementsByTagName("id").item(0)).getAttribute("value").equals("PlayerCharacter")) {
+						importedSlave.setBirthday(importedSlave.getBirthday().plusYears(14)); // If the imported character is a player character, they need to have their age adjusted to fit with the fact that NPCs start at age 14
 					}
 				} catch(Exception ex) {	
 				}
@@ -605,7 +594,7 @@ public class Game implements XMLSaving {
 						CharacterImportSetting.CLEAR_FAMILY_ID);
 				try {
 					if(((Element)((Element)((Element)characterElement.getElementsByTagName("character").item(0)).getElementsByTagName("core").item(0)).getElementsByTagName("id").item(0)).getAttribute("value").equals("PlayerCharacter")) {
-						importedLodger.setBirthday(importedLodger.getBirthday().plusYears(18)); // If the imported character is a player character, they need to have their age adjusted to fit with the fact that NPCs start at age 18
+						importedLodger.setBirthday(importedLodger.getBirthday().plusYears(14)); // If the imported character is a player character, they need to have their age adjusted to fit with the fact that NPCs start at age 14
 					}
 				} catch(Exception ex) {
 				}
@@ -650,7 +639,7 @@ public class Game implements XMLSaving {
 						CharacterImportSetting.CLEAR_FAMILY_ID);
 				try {
 					if(((Element)((Element)((Element)characterElement.getElementsByTagName("character").item(0)).getElementsByTagName("core").item(0)).getElementsByTagName("id").item(0)).getAttribute("value").equals("PlayerCharacter")) {
-						importedClubber.setBirthday(importedClubber.getBirthday().plusYears(18)); // If the imported character is a player character, they need to have their age adjusted to fit with the fact that NPCs start at age 18
+						importedClubber.setBirthday(importedClubber.getBirthday().plusYears(14)); // If the imported character is a player character, they need to have their age adjusted to fit with the fact that NPCs start at age 14
 					}
 				} catch(Exception ex) {
 				}
@@ -5882,20 +5871,36 @@ public class Game implements XMLSaving {
 			}
 		}
 		try {
-			Main.game.addNPC(new GamblingDenPatron(Gender.getGenderFromUserPreferences(false, false), DicePokerTable.COPPER, wt, pt, false), false);
-			Main.game.addNPC(new GamblingDenPatron(Gender.getGenderFromUserPreferences(false, false), DicePokerTable.COPPER, wt, pt, false), false);
-			Main.game.addNPC(new GamblingDenPatron(Gender.getGenderFromUserPreferences(false, false), DicePokerTable.SILVER, wt, pt, false), false);
-			Main.game.addNPC(new GamblingDenPatron(Gender.getGenderFromUserPreferences(false, false), DicePokerTable.SILVER, wt, pt, false), false);
-			Main.game.addNPC(new GamblingDenPatron(Gender.getGenderFromUserPreferences(false, false), DicePokerTable.GOLD, wt, pt, false), false);
+			Main.game.addNPC(new GamblingDenPatron(Gender.getGenderFromUserPreferences(false, false),
+			                                       DicePokerTable.COPPER,
+			                                       wt,
+			                                       pt,
+			                                       false), false);
+			Main.game.addNPC(new GamblingDenPatron(Gender.getGenderFromUserPreferences(false, false),
+			                                       DicePokerTable.COPPER,
+			                                       wt,
+			                                       pt,
+			                                       false), false);
+			Main.game.addNPC(new GamblingDenPatron(Gender.getGenderFromUserPreferences(false, false),
+			                                       DicePokerTable.SILVER,
+			                                       wt,
+			                                       pt,
+			                                       false), false);
+			Main.game.addNPC(new GamblingDenPatron(Gender.getGenderFromUserPreferences(false, false),
+			                                       DicePokerTable.SILVER,
+			                                       wt,
+			                                       pt,
+			                                       false), false);
+			Main.game.addNPC(new GamblingDenPatron(Gender.getGenderFromUserPreferences(false, false),
+			                                       DicePokerTable.GOLD,
+			                                       wt,
+			                                       pt,
+			                                       false), false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	// For use in debug menu:
-
 	public void startGenericSex(GameCharacter character) {
-//		Main.game.setContent(new Response("", "", Main.game.getDefaultDialogue(false)));
 		Main.game.setContent(
 				new ResponseSex(UtilText.parse(character, "Sex with [npc.name]"),
 					UtilText.parse(character, "Start a generic sex scene with [npc.name]"),

@@ -31,7 +31,14 @@ public class OrificeAnus implements OrificeInterface {
 	protected boolean virgin;
 	protected Set<OrificeModifier> orificeModifiers;
 
-	public OrificeAnus(int wetness, float capacity, int depth, int elasticity, int plasticity, boolean virgin, Collection<OrificeModifier> orificeModifiers) {
+	public OrificeAnus(
+			int wetness,
+			float capacity,
+			int depth,
+			int elasticity,
+			int plasticity,
+			boolean virgin,
+			Collection<OrificeModifier> orificeModifiers) {
 		this.wetness = wetness;
 		this.capacity = capacity;
 		stretchedCapacity = capacity;

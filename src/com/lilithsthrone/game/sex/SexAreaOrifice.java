@@ -14,10 +14,15 @@ import com.lilithsthrone.main.Main;
 public enum SexAreaOrifice implements SexAreaInterface {
 	
 	MOUTH(2,
-			-0.5f, -0.5f, -1f,
-			0.5f, -0.5f , 0.5f,
-			2/60f, 15/60f,
-			true) {
+	      -0.5f,
+	      -2.5f,
+	      -1f,
+	      0.5f,
+	      -0.5f ,
+	      0.5f,
+	      2/60f,
+	      15/60f,
+	      false) {
 		@Override
 		public String getName(GameCharacter owner, boolean standardName) {
 			if(standardName) {
@@ -1055,10 +1060,15 @@ public enum SexAreaOrifice implements SexAreaInterface {
 	},
 	
 	ASS(1,
-			-0.5f, -0.5f, -1f,
-			0.5f, -0.5f , 0f,
-			25/60f, 0,
-			false) {
+	    -0.5f,
+	    -0.5f,
+	    -1f,
+	    0.5f,
+	    -0.5f ,
+	    0f,
+	    25/60f,
+	    0,
+	    false) {
 		@Override
 		public String getName(GameCharacter owner, boolean standardName) {
 			if(standardName) {
@@ -1208,11 +1218,16 @@ public enum SexAreaOrifice implements SexAreaInterface {
 		}
 	},
 	
-	ANUS(2,
-			-0.5f, -0.5f, -1f,
-			0.5f, -0.5f , 0.5f,
-			4/60f, 4/60f,
-			true) {
+	ANUS(1,
+	     -1.5f,
+	     -2.5f,
+	     -3f,
+	     0.5f,
+	     -0.5f ,
+	     0.5f,
+	     4/60f,
+	     4/60f,
+	     true) {
 		@Override
 		public String getName(GameCharacter owner, boolean standardName) {
 			if(standardName) {
@@ -1453,11 +1468,16 @@ public enum SexAreaOrifice implements SexAreaInterface {
 		}
 	},
 	
-	VAGINA(4,
-			-0.5f, -0.5f, -1f,
-			0.5f, -0.5f , 0.5f,
-			4/60f, 2/60f,
-			true) {
+	VAGINA(2,
+	       -0.5f,
+	       -6.5f,
+	       -1f,
+	       0.5f,
+	       -0.5f ,
+	       0.5f,
+	       4/60f,
+	       2/60f,
+	       true) {
 		@Override
 		public String getName(GameCharacter owner, boolean standardName) {
 			if(standardName) {
@@ -1929,11 +1949,16 @@ public enum SexAreaOrifice implements SexAreaInterface {
 		}
 	},
 	
-	URETHRA_VAGINA(1,
-			-0.5f, -0.5f, -1f,
-			0.5f, -0.5f , 0.5f,
-			4/60f, 2/60f,
-			true) {
+	URETHRA_VAGINA(0.5f,
+	               -10.5f,
+	               -0.5f,
+	               -1f,
+	               0.5f,
+	               -0.5f ,
+	               0.5f,
+	               4/60f,
+	               2/60f,
+	               true) {
 		@Override
 		public String getName(GameCharacter owner, boolean standardName) {
 			if(standardName) {

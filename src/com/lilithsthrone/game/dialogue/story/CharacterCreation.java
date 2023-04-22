@@ -307,7 +307,13 @@ public class CharacterCreation {
 
 		// Penis piercings:
 		if(Main.game.getPlayer().hasPenis() && Main.game.getPlayer().isPiercedPenis()) {
-			Main.game.getPlayer().equipClothingFromGround(Main.game.getItemGen().generateClothing("innoxia_piercing_penis_ring", colour2, false), true, Main.game.getPlayer());
+			Main.game.getPlayer().equipClothingFromGround(
+					Main.game.getItemGen().generateClothing(
+							"innoxia_piercing_penis_ring",
+							colour2,
+							false),
+					true,
+					Main.game.getPlayer());
 			
 		} else if(Main.game.getPlayer().getClothingInSlot(InventorySlot.PIERCING_PENIS)!=null){
 			Main.game.getPlayer().unequipClothingIntoVoid(Main.game.getPlayer().getClothingInSlot(InventorySlot.PIERCING_PENIS), true, Main.game.getPlayer());

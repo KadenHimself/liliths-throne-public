@@ -321,7 +321,7 @@ public abstract class GameCharacter implements XMLSaving {
 	public static final int MAX_COMBAT_MOVES = 8;
 	public static final int DEFAULT_COMBAT_AP = 3;
 
-	public static final int MINIMUM_AGE = 18;
+	public static final int MINIMUM_AGE = 14;
 	
 	public static final int DEFAULT_TIME_START_VALUE = -1;
 	
@@ -2740,19 +2740,19 @@ public abstract class GameCharacter implements XMLSaving {
 				
 				character.setConceptionDate(LocalDateTime.of(year, month, day, 12, 0));
 				
-				if(Main.isVersionOlderThan(Game.loadingVersion, "0.3.7.4") && !character.isPlayer()) { // Birthdays prior to v0.3.7.4 are loaded based on conception date, as a bug introduced in v0.3.7.3 caused birthdays to regress by 18 years:
-					if(year+18<=Main.game.getDateNow().getYear()) {
-						character.setBirthday(LocalDateTime.of(year+18, character.getBirthMonth(), character.getDayOfBirth(), 12, 0));
-						character.setConceptionDate(LocalDateTime.of(year+18, character.getBirthMonth(), character.getDayOfBirth(), 12, 0).minusDays(15+Util.random.nextInt(30)));
+				if(Main.isVersionOlderThan(Game.loadingVersion, "0.3.7.4") && !character.isPlayer()) { // Birthdays prior to v0.3.7.4 are loaded based on conception date, as a bug introduced in v0.3.7.3 caused birthdays to regress by 14 years:
+					if(year+14<=Main.game.getDateNow().getYear()) {
+						character.setBirthday(LocalDateTime.of(year+14, character.getBirthMonth(), character.getDayOfBirth(), 12, 0));
+						character.setConceptionDate(LocalDateTime.of(year+14, character.getBirthMonth(), character.getDayOfBirth(), 12, 0).minusDays(15+Util.random.nextInt(30)));
 					} else {
 						character.setBirthday(LocalDateTime.of(year, character.getBirthMonth(), character.getDayOfBirth(), 12, 0));
 					}
 					
 				} else if(Main.isVersionOlderThan(Game.loadingVersion, "0.3.7.7") && character.isPlayer()) { // Reverting the above change for player characters
 					int age = (int) ChronoUnit.YEARS.between(character.getBirthday(), Main.game.getDateNow());
-					if(age<18) {
-						character.setBirthday(LocalDateTime.of(character.getBirthday().getYear()-18, character.getBirthMonth(), character.getDayOfBirth(), 12, 0));
-						character.setConceptionDate(LocalDateTime.of(year-18, month, day, 12, 0));
+					if(age<14) {
+						character.setBirthday(LocalDateTime.of(character.getBirthday().getYear()-14, character.getBirthMonth(), character.getDayOfBirth(), 12, 0));
+						character.setConceptionDate(LocalDateTime.of(year-14, month, day, 12, 0));
 					}
 				}
 				
@@ -3607,7 +3607,7 @@ public abstract class GameCharacter implements XMLSaving {
 			if(append) {
 				infoScreenSB.append(UtilText.parse(this,
 						" which"
-						+ (!this.isPlayer()?", due to the fact that everyone in this world starts out as being 18 from the date of their birth,":"")
+						+ (!this.isPlayer()?", due to the fact that everyone in this world starts out as being 14 from the date of their birth,":"")
 						+ " makes [npc.herHim] <span style='color:"+this.getAge().getColour().toWebHexString()+";'>"+Util.intToString(this.getAgeValue())+"</span> years old."));
 			}
 			
@@ -4344,7 +4344,7 @@ public abstract class GameCharacter implements XMLSaving {
 		int age = Math.max(0, (int) ChronoUnit.YEARS.between(getBirthday(), Main.game.getDateNow()));
 		if(this.isPlayer()) {
 			return Math.max(MINIMUM_AGE, age);
-		} else { // All non-player characters start as 18.
+		} else { // All non-player characters start as 14.
 			return MINIMUM_AGE + age;
 		}
 	}
@@ -29441,7 +29441,8 @@ public abstract class GameCharacter implements XMLSaving {
 		return applyOrgasmCumEffect(cumQuantityModifier, true);
 	}
 	public String applyOrgasmCumEffect(float cumQuantityModifier, boolean withFormatting) {
-		return this.incrementPenisStoredCum(-getPenisRawOrgasmCumQuantity() * cumQuantityModifier, withFormatting);
+		return this.incrementPenisStoredCum(
+				-getPenisRawOrgasmCumQuantity() * cumQuantityModifier, withFormatting);
 	}
 	public void applyOrgasmCumEffect() {
 		this.applyOrgasmCumEffect(1);
@@ -30034,24 +30035,7 @@ public abstract class GameCharacter implements XMLSaving {
 		}
 		
 		//TODO
-//		AbstractClothing clothingInVagina = this.getClothingInSlot(InventorySlot.VAGINA);
-//		if(clothingInVagina!=null && clothingInVagina.getItemTags().contains(ItemTag.ONAHOLE_OTHER)) {
-//			if(Main.game.isInSex()) { //TODO save onahole in sex
-//				
-//			} else {
-//				return new Vagina(
-//						VaginaType.ONAHOLE,
-//						clothingInVagina.getClothingType().getOrificeOtherLabiaSize(),
-//						clothingInVagina.getClothingType().getOrificeOtherClitSize(),
-//						clothingInVagina.getClothingType().getOrificeOtherClitGirth(),
-//						clothingInVagina.getClothingType().getOrificeOtherWetness(),
-//						clothingInVagina.getClothingType().getOrificeOtherCapacity(),
-//						clothingInVagina.getClothingType().getOrificeOtherDepth(),
-//						clothingInVagina.getClothingType().getOrificeOtherElasticity(),
-//						clothingInVagina.getClothingType().getOrificeOtherPlasticity(),
-//						false);
-//			}
-//		}
+
 		
 		return body.getVagina();
 	}

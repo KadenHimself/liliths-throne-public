@@ -1889,7 +1889,7 @@ public class CharacterUtils {
 			character.setConceptionDate(character.getBirthday().minusDays(15+Util.random.nextInt(30)));
 			
 			if(character.getSubspeciesOverrideRace()==Race.DEMON || character.getRace()==Race.HARPY) {
-				character.setAgeAppearanceDifferenceToAppearAsAge(18+Util.random.nextInt(9));
+				character.setAgeAppearanceDifferenceToAppearAsAge(14+Util.random.nextInt(9));
 			}
 		}
 		
@@ -2123,7 +2123,7 @@ public class CharacterUtils {
 			if(character.hasFetish(Fetish.FETISH_PURE_VIRGIN)
 					&& character.getHistory()!=Occupation.NPC_PROSTITUTE
 					&& !character.hasPersonalityTrait(PersonalityTrait.LEWD)
-					&& (!character.getHistory().isLowlife() || character.getAgeValue()==18)) {
+					&& (!character.getHistory().isLowlife() || character.getAgeValue()==14)) {
 				character.setVaginaVirgin(true);
 				if(Math.random()<0.33f) {
 					character.addPersonalityTrait(PersonalityTrait.INNOCENT);

@@ -44,9 +44,17 @@ import com.lilithsthrone.world.places.PlaceType;
 public class BraxOffice {
 
 	public static void setBraxsPostQuestStatus(boolean applyPlayerLocationChange) {
-		Main.game.getNpc(Brax.class).setLocation(WorldType.ENFORCER_HQ, PlaceType.ENFORCER_HQ_RECEPTION_DESK, true);
-		Main.game.getNpc(Brax.class).setPendingClothingDressing(true);
-		Main.game.getNpc(Brax.class).setAffection(Main.game.getPlayer(), -50);
+		Main.game.getNpc(
+				Brax.class).setLocation(
+				WorldType.ENFORCER_HQ,
+				PlaceType.ENFORCER_HQ_RECEPTION_DESK,
+				true);
+		Main.game.getNpc(
+				Brax.class).setPendingClothingDressing(true);
+		Main.game.getNpc(
+				Brax.class).setAffection(
+						Main.game.getPlayer(),
+						-50);
 		
 		Main.game.getNpc(CandiReceptionist.class).addSlave(Main.game.getNpc(Brax.class));
 		Main.game.getWorlds().get(WorldType.ENFORCER_HQ).getCell(PlaceType.ENFORCER_HQ_BRAXS_OFFICE).getInventory().clearNonEquippedInventory(true);

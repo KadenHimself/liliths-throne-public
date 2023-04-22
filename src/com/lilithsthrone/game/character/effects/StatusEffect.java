@@ -2911,7 +2911,8 @@ public class StatusEffect {
 			"psychoactive",
 			PresetColour.BASE_YELLOW,
 			false,
-			Util.newHashMapOfValues(new Value<>(Attribute.MAJOR_PHYSIQUE, -5f),
+			Util.newHashMapOfValues(
+					new Value<>(Attribute.MAJOR_PHYSIQUE, -5f),
 					new Value<>(Attribute.MAJOR_ARCANE, -5f),
 					new Value<>(Attribute.RESISTANCE_LUST, -25f)),
 			Util.newArrayListOfValues("Open to <b style='color: " + PresetColour.PSYCHOACTIVE.toWebHexString() + ";'>Hypnotic Suggestion</b>")) {
@@ -7037,7 +7038,8 @@ public class StatusEffect {
 			"chastity2",
 			PresetColour.GENERIC_SEX,
 			false,
-			Util.newHashMapOfValues(new Value<>(Attribute.RESISTANCE_LUST, -5f)),
+			Util.newHashMapOfValues(
+					new Value<>(Attribute.RESISTANCE_LUST, -5f)),
 			Util.newArrayListOfValues("[style.colourSex(Increasing in intensity...)]")) {
 		@Override
 		public String getDescription(GameCharacter target) {

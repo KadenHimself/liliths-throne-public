@@ -50,7 +50,7 @@ public enum FluidRegeneration {
 	FIVE_INSANELY_FAST("insanely fast",
 	                250_000,
 	                750_000,
-	                "very rapidly",
+	                "insanely fast",
 	                PresetColour.GENERIC_SIZE_FIVE);
 	
 

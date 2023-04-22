@@ -58,7 +58,9 @@ public class DaddyDialogue {
 	}
 	
 	private static void acceptAsDaddy() {
-		Main.game.getTextStartStringBuilder().append(Main.game.getNpc(Daddy.class).incrementAffection(Main.game.getPlayer(), 15));
+		Main.game.getTextStartStringBuilder().append(Main.game.getNpc(
+				Daddy.class).incrementAffection(
+						Main.game.getPlayer(), 15));
 		Main.game.getPlayer().setPetName(Main.game.getNpc(Daddy.class), "daddy");
 		Main.game.getDialogueFlags().setFlag(DialogueFlagValue.daddySendingReward, true);
 		Main.game.getTextStartStringBuilder().append(Main.game.getPlayer().setQuestProgress(QuestLine.SIDE_DADDY, Quest.DADDY_ACCEPTED));
