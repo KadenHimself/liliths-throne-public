@@ -133,7 +133,7 @@ public enum CoverableArea {
 					InventorySlot.GROIN,
 					InventorySlot.LEG)) {
 		public boolean isPhysicallyAvailable(GameCharacter owner) {
-			return owner.hasPenis();
+			return owner.hasPenis() && owner.hasErection();
 		}
 	},
 	

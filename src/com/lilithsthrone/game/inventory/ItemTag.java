@@ -327,6 +327,10 @@ public enum ItemTag {
 			Util.newArrayListOfValues(
 					"[style.colourTerrible(Prevents orgasm)]"),
 			false),
+	FEMINIZER(Util.newArrayListOfValues(
+			"[style.colourTerrible(FEMINIZER)]"),
+			false),
+
 	ALLOW_ORGASM( // Negates the effect of orgasm blocking items.
 			Util.newArrayListOfValues(
 					"[style.colourSex(Negates orgasm prevention)]"),

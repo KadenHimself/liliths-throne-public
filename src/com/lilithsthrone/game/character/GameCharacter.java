@@ -1094,35 +1094,7 @@ public abstract class GameCharacter implements XMLSaving {
 				XMLUtil.addAttribute(doc, element, "xp", String.valueOf(this.getFetishExperienceMap().get(f)));
 			}
 		}
-		
-//		for(AbstractFetish f : this.getFetishes(false)){
-//			Element element = doc.createElement("fetish");
-//			characterFetishes.appendChild(element);
-//			
-//			XMLUtil.addAttribute(doc, element, "type", Fetish.getIdFromFetish(f));
-//		}
-//		
-//		Element fetishDesire = doc.createElement("fetishDesire");
-//		properties.appendChild(fetishDesire);
-//		for(Entry<AbstractFetish, FetishDesire> entry : this.getFetishDesireMap().entrySet()){
-//			Element fondnessEntry = doc.createElement("entry");
-//			fetishDesire.appendChild(fondnessEntry);
-//			
-//			XMLUtil.addAttribute(doc, fondnessEntry, "fetish", Fetish.getIdFromFetish(entry.getKey()));
-//			XMLUtil.addAttribute(doc, fondnessEntry, "desire", entry.getValue().toString());
-//		}
-//		
-//		Element fetishExperience = doc.createElement("fetishExperience");
-//		properties.appendChild(fetishExperience);
-//		for(Entry<AbstractFetish, Integer> entry : this.getFetishExperienceMap().entrySet()){
-//			Element expEntry = doc.createElement("entry");
-//			fetishExperience.appendChild(expEntry);
-//			
-//			XMLUtil.addAttribute(doc, expEntry, "fetish", Fetish.getIdFromFetish(entry.getKey()));
-//			XMLUtil.addAttribute(doc, expEntry, "experience", String.valueOf(entry.getValue()));
-//		}
-		
-		
+
 		// Status effects:
 		Element characterStatusEffects = doc.createElement("statusEffects");
 		properties.appendChild(characterStatusEffects);
@@ -1364,15 +1336,7 @@ public abstract class GameCharacter implements XMLSaving {
 			// Useful externally.
 			XMLUtil.createXMLElementWithValue(doc, slaveryElement, "value", String.valueOf(this.getValueAsSlave(true)));
 
-//			if(!this.slaveCategory.isEmpty()) {
-//				XMLUtil.createXMLElementWithValue(doc, slaveryElement, "category", this.slaveCategory);
-//			}
 
-//			if(this.slave_notes != "") {
-//				Element notes = doc.createElement("notes");
-//				slaveryElement.appendChild(notes);
-//				notes.setTextContent(this.getSlaveNotes());
-//			}
 		}
 		
 		
@@ -9803,21 +9767,6 @@ public abstract class GameCharacter implements XMLSaving {
 		}
 
 		//TODO This should work, but hasn't been tested. It should factor in all available positions and interactions before being added.
-//		// Remove SexTypes which are impossible to perform:
-//		if(Main.game.isInSex()
-//				&& !Main.sex.getInitialSexManager().isPositionChangingAllowed(this)
-//				&& !Main.sex.getInitialSexManager().isPositionChangingAllowed(target)) {
-//			Set<SexType> sexTypesAvailable = new HashSet<>();
-//			for(SexActionInterface si : Main.sex.getActionsAvailablePartner(this, target)) {
-//				sexTypesAvailable.add(si.getAsSexType());
-//			}
-//			for(SexActionInterface si : Main.sex.getActionsAvailablePartner(target, this)) {
-//				sexTypesAvailable.add(si.getAsSexType().getReversedSexType());
-//			}
-//			foreplaySexTypes.keySet().retainAll(sexTypesAvailable);
-//			mainSexTypes.keySet().retainAll(sexTypesAvailable);
-//		}
-		
 		// Special cases:
 		// Breasts:
 		if(!target.isBreastFuckableNipplePenetration()) {
@@ -19706,18 +19655,19 @@ public abstract class GameCharacter implements XMLSaving {
 	public void setArousal(float arousal, boolean overridePlayerSexArousalRestriction) {
 		if(!this.isAbleToOrgasm()) { // Lock at maximum of 95 arousal if unable to orgasm
 			arousal = Math.min(95, arousal);
+
 		}
-		
+
 		if (arousal < 0) {
 			setAttribute(Attribute.AROUSAL, 0, false);
-			
+
 		} else if (arousal > 100) {
 			setAttribute(Attribute.AROUSAL, 100, false);
-			
+
 		} else {
 			setAttribute(Attribute.AROUSAL, arousal, false);
 		}
-		
+
 		if(Main.game.isInSex() && overridePlayerSexArousalRestriction) {
 			Main.sex.setOverridePlayerArousalRestriction(true);
 		}
@@ -19857,6 +19807,15 @@ public abstract class GameCharacter implements XMLSaving {
 	public boolean isWearingChastity() {
 		for(AbstractClothing c : this.getClothingCurrentlyEquipped()) {
 			if(c.getItemTags().contains(ItemTag.CHASTITY)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isBeingFeminized() {
+		for(AbstractClothing c : this.getClothingCurrentlyEquipped()) {
+			if(c.getItemTags().contains(ItemTag.FEMINIZER)) {
 				return true;
 			}
 		}

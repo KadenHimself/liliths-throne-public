@@ -317,15 +317,7 @@ public class PlayerCharacter extends GameCharacter implements XMLSaving {
 			racesDiscoveredAdvanced.appendChild(element);
 			element.setTextContent(Subspecies.getIdFromSubspecies(subspecies));
 		}
-		
-		
-//		private SizedStack<ShopTransaction> buybackStack; TODO
-		
-//		Element slavesOwned = doc.createElement("slavesExported");
-//		properties.appendChild(slavesOwned);
-//		for(String id : this.getSlavesOwned()) {
-//			Main.game.getNPCById(id).saveAsXML(slavesOwned, doc);
-//		}
+
 		
 		return playerElement;
 	}

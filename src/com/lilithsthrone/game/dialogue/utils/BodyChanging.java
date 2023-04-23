@@ -351,85 +351,7 @@ public class BodyChanging {
 		return BodyChanging.getTarget().getSubspeciesOverride()==Subspecies.HALF_DEMON;
 	}
 	
-//	private static Map<AbstractBodyCoveringType, List<String>> getMainCoveringsMap() {
-//		Map<AbstractBodyCoveringType, List<String>> coveringsNamesMap = new LinkedHashMap<>();
-//
-////		if(getTarget().isElemental()) {
-////			switch(getTarget().getBodyMaterial()) {
-////				case AIR:
-////					coveringsNamesMap.put(BodyCoveringType.AIR, Util.newArrayListOfValues("AIR"));
-////					break;
-////				case ARCANE:
-////					coveringsNamesMap.put(BodyCoveringType.ARCANE, Util.newArrayListOfValues("ARCANE"));
-////					break;
-////				case FIRE:
-////					coveringsNamesMap.put(BodyCoveringType.FIRE, Util.newArrayListOfValues("FIRE"));
-////					break;
-////				case FLESH:
-////					break;
-////				case ICE:
-////					coveringsNamesMap.put(BodyCoveringType.ICE, Util.newArrayListOfValues("ICE"));
-////					break;
-////				case RUBBER:
-////					coveringsNamesMap.put(BodyCoveringType.RUBBER, Util.newArrayListOfValues("RUBBER"));
-////					break;
-////				case SLIME:
-////					break;
-////				case STONE:
-////					coveringsNamesMap.put(BodyCoveringType.STONE, Util.newArrayListOfValues("STONE"));
-////					break;
-////				case WATER:
-////					coveringsNamesMap.put(BodyCoveringType.WATER, Util.newArrayListOfValues("WATER"));
-////					break;
-////			}
-////
-////		} else if(getTarget().getBodyMaterial()==BodyMaterial.SLIME) {
-////			coveringsNamesMap.put(BodyCoveringType.SLIME, Util.newArrayListOfValues("SLIME"));
-////
-////		} else {
-//			for(BodyPartInterface bp : getTarget().getAllBodyParts()){
-//				if(bp.getBodyCoveringType(getTarget())!=null
-//						&& !(bp instanceof Hair)
-//						&& !(bp instanceof Eye)
-//						&& !(bp instanceof Mouth)
-//						&& !(bp instanceof Vagina)
-//						&& !(bp instanceof Ass)
-//						&& !(bp instanceof Nipples)
-//						&& !(bp instanceof Breast)
-//						&& !(bp instanceof Penis)
-//						&& !(bp instanceof Antenna)
-//						&& !(bp instanceof Horn)) {
-//					String name = bp.getName(getTarget());
-//					if(bp instanceof Torso) {
-//						name = "torso";
-//					}
-//
-//					if(coveringsNamesMap.containsKey(bp.getBodyCoveringType(getTarget()))) {
-//						coveringsNamesMap.get(bp.getBodyCoveringType(getTarget())).add(name);
-//					} else {
-//						coveringsNamesMap.put(bp.getBodyCoveringType(getTarget()), Util.newArrayListOfValues(name));
-//					}
-//				}
-//			}
-//			if(getTarget().getTailType()==TailType.DEMON_HAIR_TIP && !coveringsNamesMap.containsKey(BodyCoveringType.HAIR_DEMON)) {
-//				coveringsNamesMap.put(BodyCoveringType.HAIR_DEMON, Util.newArrayListOfValues(BodyCoveringType.HAIR_DEMON.getName(getTarget())));
-//			}
-////		}
-//
-//		// Return an altered map for if the target's body is not made of flesh:
-//		if(getTarget().getBodyMaterial()!=BodyMaterial.FLESH) {
-//			Map<AbstractBodyCoveringType, List<String>> altMaterialCoveringsNamesMap = new LinkedHashMap<>();
-//			for(Entry<AbstractBodyCoveringType, List<String>> entry : coveringsNamesMap.entrySet()) {
-//				if(entry.getKey().getCategory().isInfluencedByMaterialType()) {
-//					altMaterialCoveringsNamesMap.put(BodyCoveringType.getMaterialBodyCoveringType(getTarget().getBodyMaterial(), entry.getKey().getCategory()), entry.getValue());
-//				}
-//			}
-//			return altMaterialCoveringsNamesMap;
-//		}
-//
-//
-//		return coveringsNamesMap;
-//	}
+
 	
 	private static List<AbstractRace> getSlaveCustomisationRaceOptions() {
 		List<AbstractRace> list = new ArrayList<>();
@@ -622,9 +544,7 @@ public class BodyChanging {
 									(getTarget().isElemental()
 											?allRaces
 											:getMinorPartsDemonRaces(true)),
-//											:(removeNoneFromTailChoices()||isSelfTFMenu()
-//												?getMinorPartsDemonRaces(true)
-//												:Util.newArrayListOfValues(Race.DEMON))),
+
 									removeNoneFromTailChoices())
 							+ CharacterModificationUtils.getSelfTransformTailLengthDiv()
 							+"</div>"
@@ -647,9 +567,7 @@ public class BodyChanging {
 										(getTarget().isElemental()
 											?allRaces
 											:getMinorPartsDemonRaces(true)),
-//											:(!removeNoneFromWingChoices()
-//												?Util.newArrayListOfValues(Race.DEMON)
-//												:getMinorPartsDemonRaces(true)),
+
 										removeNoneFromWingChoices())
 									+ CharacterModificationUtils.getSelfTransformWingSizeDiv()
 								+"</div>"
